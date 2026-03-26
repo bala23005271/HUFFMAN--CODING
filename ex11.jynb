@@ -1,0 +1,108 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "bde4de46",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Character | Huffman Code\n",
+      "-------------------------\n",
+      "    .    |    00\n",
+      "    M    |    010\n",
+      "    s    |    011\n",
+      "    u    |    100\n",
+      "    r    |    101\n",
+      "    e    |    110\n",
+      "    n    |    111\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Get the input String\n",
+    "input_string = \"M.suren.\"\n",
+    "\n",
+    "# Calculate frequency of each character in the input string\n",
+    "frequency = {}\n",
+    "for char in input_string:\n",
+    "    if char in frequency:\n",
+    "        frequency[char] += 1\n",
+    "    else:\n",
+    "        frequency[char] = 1\n",
+    "# Create tree nodes\n",
+    "#  Create tree nodes\n",
+    "nodes = [[char, freq] for char, freq in frequency.items()]\n",
+    "\n",
+    "\n",
+    "# Main function to implement huffman coding\n",
+    "\n",
+    "while len(nodes) > 1:\n",
+    "    # Sort nodes based on frequency\n",
+    "    nodes = sorted(nodes, key=lambda x: x[1])\n",
+    "\n",
+    "    # Pick two smallest nodes\n",
+    "    left = nodes.pop(0)\n",
+    "    right = nodes.pop(0)\n",
+    "\n",
+    "    # Create a new node with combined frequency\n",
+    "    new_node = [[left, right], left[1] + right[1]]\n",
+    "    nodes.append(new_node)\n",
+    "\n",
+    "# The final node is the Huffman tree\n",
+    "huffman_tree = nodes[0]\n",
+    "\n",
+    "\n",
+    "# Calculate frequency of occurrence\n",
+    "\n",
+    "huffman_codes = {}\n",
+    "\n",
+    "def generate_codes(tree, code=\"\"):\n",
+    "    if isinstance(tree[0], str):  # If it's a leaf node\n",
+    "        huffman_codes[tree[0]] = code\n",
+    "    else:  # If it's an internal node, recurse\n",
+    "        generate_codes(tree[0][0], code + \"0\")\n",
+    "        generate_codes(tree[0][1], code + \"1\")\n",
+    "\n",
+    "generate_codes(huffman_tree)\n",
+    "# Print the characters and its huffmancode\n",
+    "print(\"Character | Huffman Code\")\n",
+    "print(\"-------------------------\")\n",
+    "for char, code in huffman_codes.items():\n",
+    "    print(f\"    {char}    |    {code}\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "4100012a",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.11.3"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
